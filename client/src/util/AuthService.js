@@ -15,7 +15,11 @@ class AuthService {
   }
 
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken();
+    if (token) {
+      return decode(token);
+    }
+    return null;
   }
 
   loggedIn() {
@@ -37,7 +41,6 @@ class AuthService {
 
   setToken(idToken) {
     // Saves user token to localStorage
-    axios.defaults.headers.common["Authorization"] = `Bearer ${idToken}`;
     localStorage.setItem("id_token", idToken);
   }
 
@@ -47,8 +50,7 @@ class AuthService {
   }
 
   logout() {
-    // Clear user token and profile data from localStorage
-    axios.defaults.headers.common["Authorization"] = null;
+    // Remove token from local storage
     localStorage.removeItem("id_token");
   }
 }

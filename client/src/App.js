@@ -5,13 +5,21 @@ import LoginPage from "./pages/LoginPage";
 import ProtectedPage from "./pages/ProtectedPage";
 import PublicPage from "./pages/PublicPage";
 import SignUpPage from "./pages/SignUpPage";
+import UserProfilePage from "./pages/UserProfilePage";
 import { ProvideAuth } from "./util/authContext";
 
 function App() {
   return (
     <ProvideAuth>
       <Router>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            margin: "0 auto",
+            maxWidth: "50rem"
+          }}
+        >
           <Navbar />
 
           <Switch>
@@ -26,6 +34,9 @@ function App() {
             </Route>
             <PrivateRoute path="/protected">
               <ProtectedPage />
+            </PrivateRoute>
+            <PrivateRoute path="/profile">
+              <UserProfilePage />
             </PrivateRoute>
           </Switch>
         </div>

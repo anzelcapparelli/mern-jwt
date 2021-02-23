@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../util/authContext";
 
+const styles = {
+  ul: {
+    display: "flex",
+    justifyContent: "flex-start",
+    listStyleType: "none",
+    margin: 0,
+    padding: 0
+  },
+  li: { display: "block", padding: "0.5em" }
+};
+
 function Navbar() {
   const auth = useAuth();
 
@@ -8,14 +19,19 @@ function Navbar() {
     auth.logout();
   };
   return (
-    <ul>
-      <li>
+    <ul style={styles.ul}>
+      <li style={styles.li}>
         <Link to="/public">Public Page</Link>
       </li>
-      <li>
+      <li style={styles.li}>
         <Link to="/protected">Protected Page</Link>
       </li>
-      <li>
+      {auth.isLoggedIn && (
+        <li style={styles.li}>
+          <Link to="/profile">Profile Page</Link>
+        </li>
+      )}
+      <li style={styles.li}>
         {auth.isLoggedIn ? (
           <button type="button" onClick={signOut}>
             Sign Out

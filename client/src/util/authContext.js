@@ -1,11 +1,26 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 import AuthService from "./AuthService";
 
 const auth = new AuthService();
 
+const initAxiosAuth = () => {
+  // add an interceptor (kind of like middleware) that will add auth headers to
+  // requests
+  axios.interceptors.request.use(function (config) {
+    // add authorization headers for requests to own api (request url starts with
+    // "/api" exactly)
+    const token = auth.getToken();
+    if (token && /^\/api/.test(config.url)) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  });
+};
+
 // Custom hook to provide auth state and login/logout functions
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => auth.getProfile());
   const [error, setError] = useState(null);
 
   const isLoggedIn = !!user;
@@ -47,6 +62,13 @@ const authContext = createContext({
 
 function ProvideAuth({ children }) {
   const auth = useProvideAuth();
+
+  // initialize axios auth headers when ProvideAuth is rendered for the first
+  // time
+  useEffect(() => {
+    initAxiosAuth();
+  }, []);
+
   return <authContext.Provider value={auth} children={children} />;
 }
 

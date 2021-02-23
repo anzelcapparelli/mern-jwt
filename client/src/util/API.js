@@ -2,7 +2,7 @@ import axios from "axios";
 const API = {
   // Gets a single user by id
   getUser: () => {
-    return axios.get("/api/user/");
+    return axios.get("/api/user");
   },
   // sign up a user to our service
   signUpUser: ({ username, email, password }) => {

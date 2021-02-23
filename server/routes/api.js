@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const db = require("../models");
 const isAuthenticated = require("../config/isAuthenticated");
 const auth = require("../config/auth");
 const apiRouter = new Router();
