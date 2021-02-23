@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage";
 import ProtectedPage from "./pages/ProtectedPage";
 import PublicPage from "./pages/PublicPage";
+import SignUpPage from "./pages/SignUpPage";
 import { ProvideAuth } from "./util/authContext";
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route path="/login">
               <LoginPage />
+            </Route>
+            <Route path="/signup">
+              <SignUpPage />
             </Route>
             <PrivateRoute path="/protected">
               <ProtectedPage />

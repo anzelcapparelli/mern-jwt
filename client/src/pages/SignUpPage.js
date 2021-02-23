@@ -1,33 +1,52 @@
 import { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useAuth } from "../util/authContext";
+import API from "../util/API";
 
-function LoginPage() {
-  let auth = useAuth();
+function SignUpPage() {
   const [formState, setFormState] = useState({
+    username: "",
     email: "",
     password: ""
   });
+
+  const auth = useAuth();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormState({ ...formState, [name]: value });
   };
 
-  const login = (event) => {
+  const handleSignUpFormSubmit = (event) => {
     event.preventDefault();
-    auth.login(formState);
+    API.signUpUser(formState)
+      .then(() => {
+        auth.login({ email: formState.email, password: formState.password });
+      })
+      .catch((error) => {
+        alert("Unable to sign up.");
+        console.log(error);
+      });
   };
 
   if (auth.isLoggedIn) {
-    // redirect to /protected if user is logged in
     return <Redirect to="/protected" />;
   }
 
   return (
     <div>
-      <h1>Login</h1>
-      <form onSubmit={login}>
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSignUpFormSubmit}>
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value={formState.username}
+          onChange={handleInputChange}
+          required
+        />
+        <br />
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -48,15 +67,10 @@ function LoginPage() {
           required
         />
         <br />
-        <button type="submit" onClick={login}>
-          Log in
-        </button>
+        <button type="submit">Submit</button>
       </form>
-      <p>
-        Don't have an account yet? <Link to="/signup">Sign Up</Link>
-      </p>
     </div>
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

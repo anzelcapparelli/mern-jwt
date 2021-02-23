@@ -5,7 +5,7 @@ function ProtectedPage() {
   return (
     <div>
       <h2>Protected</h2>
-      <p>Email: ${auth.user.email}</p>
+      <p>Email: {auth.user.email}</p>
     </div>
   );
 }

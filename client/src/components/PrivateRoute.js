@@ -1,19 +1,14 @@
-import { Route, Redirect, useLocation } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../util/authContext";
 
 // A wrapper for <Route> that redirects to the login screen if you're not yet
 // authenticated. Takes the same props as a Route component from react-router.
 function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
-  const location = useLocation();
 
   return (
     <Route {...rest}>
-      {auth.isLoggedIn ? (
-        children
-      ) : (
-        <Redirect to={{ pathname: "/login", state: { from: location } }} />
-      )}
+      {auth.isLoggedIn ? children : <Redirect to="/login" />}
     </Route>
   );
 }

@@ -1,0 +1,20 @@
+{
+  "name": "create-react-express-jwt2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server",
+    "start:dev": "concurrently -c magenta,blue \"npm:server\" \"npm:client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run start"
+  },
+  "keywords": [],
+  "author": "John Desrosiers <john.desro@gmail.com> (https://github.com/median-man)",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^6.0.0",
+    "if-env": "^1.0.4"
+  }
+}
