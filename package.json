@@ -11,7 +11,10 @@
     "client": "cd client && npm run start"
   },
   "keywords": [],
-  "author": "John Desrosiers <john.desro@gmail.com> (https://github.com/median-man)",
+  "contributors": [
+    "John Desrosiers <john.desro@gmail.com> (https://github.com/median-man)",
+    "Travis Thompson <Travo100@gmail.com> (https://github.com/Travo100)"
+  ],
   "license": "MIT",
   "dependencies": {
     "concurrently": "^6.0.0",

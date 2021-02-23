@@ -8,7 +8,6 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "John Desrosiers <john.desro@gmail.com> (https://github.com/median-man)",
   "license": "MIT",
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
