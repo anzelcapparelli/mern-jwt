@@ -1,0 +1,57 @@
+import { createContext, useContext, useState } from "react";
+import AuthService from "./AuthService";
+
+const auth = new AuthService();
+
+// Custom hook to provide auth state and login/logout functions
+function useProvideAuth() {
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+
+  const isLoggedIn = !!user;
+
+  const login = ({ email, password }) => {
+    return auth
+      .login(email, password)
+      .then(() => {
+        setUser(auth.getProfile());
+        setError(null);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
+  const logout = () => {
+    auth.logout();
+    setUser(null);
+  };
+
+  return {
+    isLoggedIn,
+    user,
+    error,
+    login,
+    logout
+  };
+}
+
+// Create a global context for providing/consuming the auth context
+const authContext = createContext({
+  isLoggedIn: false,
+  user: null,
+  error: null,
+  login: () => {},
+  logout: () => {}
+});
+
+function ProvideAuth({ children }) {
+  const auth = useProvideAuth();
+  return <authContext.Provider value={auth} children={children} />;
+}
+
+function useAuth() {
+  return useContext(authContext);
+}
+
+export { ProvideAuth, useAuth };
