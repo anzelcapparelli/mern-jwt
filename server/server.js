@@ -1,7 +1,7 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 const express = require("express");
 const app = express();
-const path = require("path");
 const mongoose = require("mongoose");
 const apiRouter = require("./routes/api");
 
@@ -27,12 +27,13 @@ mongoose
   .then(() => console.log("MongoDB Connected!"))
   .catch((err) => console.error(err));
 
-app.use(apiRouter);
-
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "../client/build")));
 }
+
+app.use(apiRouter);
+
 // Error handling
 app.use(function (err, req, res, next) {
   if (err.name === "UnauthorizedError") {
@@ -46,7 +47,7 @@ app.use(function (err, req, res, next) {
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function (req, res) {
-  res.sendFile(path.resolve(__dirname, "../client/build"));
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 });
 
 app.listen(PORT, function () {
