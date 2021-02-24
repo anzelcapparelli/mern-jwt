@@ -31,7 +31,7 @@ app.use(apiRouter);
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve("../client/build")));
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
 }
 // Error handling
 app.use(function (err, req, res, next) {
@@ -46,7 +46,7 @@ app.use(function (err, req, res, next) {
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.resolve(__dirname, "../client/build"));
 });
 
 app.listen(PORT, function () {
