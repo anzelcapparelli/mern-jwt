@@ -1,4 +1,4 @@
-# Create React Express App
+# MERN JWT
 
 ## About This Boilerplate
 
@@ -60,4 +60,5 @@ git commit -m "Initial commit"
 1. Go onto your heroku account and link your GitHub repository through the UI.
 2. Create a collection on Mongo Atlas.
 3. Add a `MONGODB_URI` key to your Heroku configuration. Use the connection string for your collection/user from Mongo Atlas as the value.
+4. Add a `SERVER_SECRET` key to your Heroku configuration and use a strong value that is at least 32 characters long. You don't need to remember it so use a random string text with a mix of upper case, lower case, symbols and numbers.
 5. Go back and click "Deploy"
