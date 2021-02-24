@@ -20,7 +20,12 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+
+    // Don't include password in queries unless the query asks for it to prevent
+    // accidentally exposing hashed passwords. (see
+    // https://mongoosejs.com/docs/api.html#schematype_SchemaType-select)
+    select: false
   },
   createdAt: {
     type: Date,

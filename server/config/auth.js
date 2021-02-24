@@ -7,6 +7,7 @@ module.exports = {
       db.User.findOne({
         email: email
       })
+        .select("+password")
         .then((user) => {
           user.verifyPassword(password, (err, isMatch) => {
             if (isMatch && !err) {
